@@ -1,0 +1,35 @@
+﻿@page "/books"
+@using DBBookstore2.Data
+@using DBBookstore2.Models
+@using Microsoft.EntityFrameworkCore
+@inject StoreDBContext dbcontext
+
+
+<h1 class="main-heading" style="color: black; font-family: Rockwell, Times, serif, sans-serif; font-weight: bold;">Books</h1>
+
+<div class="row">
+	@foreach (var book in books)
+	{
+		<div class="col-md-4">
+			<div class="card">
+				<img class="card-img-top" src="https://media.istockphoto.com/id/578581442/sv/vektor/pile-of-books-with-cup-of-tea.jpg?s=612x612&w=0&k=20&c=Xk8ttbkXLHE_hKK34lxlsYh9QIp-Ltt76nJ2f2hfgCg=" />
+				<div class="card-body">
+					<h5 class="card-title">@book.BookTitle</h5>
+					<p class="card-text"> <em> @book.BookLanguage </em></p>
+					<p class="card-text"> <strong> @book.BookPrice SEK</strong></p>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+@code {
+	private List<Book> books = new List<Book>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		books = await dbcontext.Books.ToListAsync();
+	}
+
+}
+

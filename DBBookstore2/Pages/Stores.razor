@@ -1,0 +1,35 @@
+﻿@page "/store"
+@using Microsoft.EntityFrameworkCore
+@using DBBookstore2.Data
+@using DBBookstore2.Models
+@inject StoreDBContext dbcontext
+
+
+
+<h1 class="main-heading" style="color: black; font-family: Rockwell, Times, serif, sans-serif; font-weight: bold;">Stores</h1>
+
+<div class="row">
+	@foreach (var store in stores)
+	{
+		<div class="col-md-4">
+			<div class="card">
+				<img class="card-img-top" src="https://techcrunch.com/wp-content/uploads/2016/01/a-real-bookstore.jpg" />
+				<div class="card-body">
+					<h5 class="card-title">@store.StoreName</h5>
+					<p class="card-text"> <em>@store.Adress</em></p>
+					<p class="card-text"> <strong></strong></p>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+@code {
+	private List<Store> stores = new List<Store>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		stores = await dbcontext.Stores.ToListAsync();
+	}
+
+}

@@ -1,0 +1,59 @@
+﻿@page "/customer"
+@inherits Microsoft.AspNetCore.Components.ComponentBase
+@using DBBookstore2.Data
+@using DBBookstore2.Models
+@using Microsoft.EntityFrameworkCore
+@inject StoreDBContext dbcontext
+
+
+<PageTitle>Customer</PageTitle>
+
+<h3>Customer List:</h3>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Adress</th>
+            <th>Email</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in customer)
+        {
+            <tr>
+
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.Email</td>
+                <td>@customer.PhoneNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Customer> customer = new List<Customer>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = await dbcontext.Customers.ToListAsync();
+    }
+}

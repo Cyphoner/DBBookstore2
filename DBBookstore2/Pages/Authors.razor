@@ -1,0 +1,35 @@
+﻿@page "/author"
+@using Microsoft.EntityFrameworkCore
+@using DBBookstore2.Data
+@using DBBookstore2.Models
+@inject StoreDBContext dbcontext
+
+
+
+<h1 class="main-heading" style="color: black; font-family: Rockwell, Times, serif, sans-serif; font-weight: bold;">Authors</h1>
+
+<div class="row">
+	@foreach (var author in author)
+	{
+		<div class="col-md-4">
+			<div class="card">
+				<img class="card-img-top" src="https://media.istockphoto.com/id/578581442/sv/vektor/pile-of-books-with-cup-of-tea.jpg?s=612x612&w=0&k=20&c=Xk8ttbkXLHE_hKK34lxlsYh9QIp-Ltt76nJ2f2hfgCg=" />
+				<div class="card-body">
+					<h5 class="card-title">@author.AuthorFirstName</h5>
+					<p class="card-text"> <em>@author.AuthorLastName</em></p>
+					<p class="card-text"> <strong>@author.AuthorBirthDate</strong></p>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+@code {
+    private List<Author> author = new List<Author>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        author = await dbcontext.Authors.ToListAsync();
+    }
+
+}
